@@ -1,11 +1,17 @@
 {
-    "parser": "babel-eslint",
-    "extends": "react",
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "settings": {
-        "react": { "verion": "detect" }
-    }
+	"parser": "babel-eslint",
+	"extends": ["airbnb", "react"],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"settings": {
+		"react": { "verion": "detect" }
+	},
+	"rules": {
+    "indent": ["error", 2],
+		"comma-dangle": ["error", "never"],
+		"linebreak-style": ["error", "unix"], // support lf linebreak style
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+  }
 }
