@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Oxygen', sans-serif;
+  font-size: 0.9rem;
+  background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      rgba(198, 225, 162, 0.826456) 37.5%,
+      rgba(145, 250, 11, 0) 100%
+    ),
+    #c4c4c4;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.inline-b {
+  display: inline-block;
+}
+
+.league {
+  text-align: center;
+  margin-bottom: 50px;
+  /* background-image: url('../images/sample2.png'); */
+}
+
+.loading {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  margin: 20px auto;
+  background-image: url('../images/loader.gif');
+}
+
+.error {
+  text-align: center;
+  padding: 40px 0;
+  color: #ad3333;
+  font-size: 1.2rem;
+}

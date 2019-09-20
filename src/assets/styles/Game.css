@@ -1,0 +1,50 @@
+.game {
+  width: 500px;
+  margin: 20px auto;
+}
+
+.game-time {
+  width: 200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 100;
+  text-align: center;
+  margin-bottom: -5px;
+  border-radius: 25px;
+  padding: 3px 10px;
+  color: #fff;
+  border: 3px solid #aaaaaa;
+  background: #969121;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.25);
+}
+
+.teams-score {
+  width: 100%;
+  padding: 0 10px;
+  background: #27ae60;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.home-team,
+.away-team {
+  width: 43%;
+  padding: 10px 0;
+  text-align: left;
+}
+
+.away-team {
+  text-align: right;
+}
+
+.score {
+  width: 14%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 15px;
+  background: #219653;
+  color: #fff;
+  font-size: 1.1rem;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}

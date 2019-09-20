@@ -9,22 +9,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx)$/i,
         exclude: /(node_modules|bower_components)/,
         use: ['babel-loader', 'eslint-loader']
       },
       {
-        test: /\.(css|less)$/,
-        use: ['style-loader', 'less-loader', 'css-loader']
+        test: /\.(css|less)$/i,
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
-        test: /\.(png|jpe?g|svg|gif)$/,
+        test: /\.(png|jpe?g|svg|gif)$/i,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 10000,
-              name: 'images/[hash]-[name].[ext]'
+              name: 'images/[name].[ext]'
             }
           }
         ]
