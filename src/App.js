@@ -1,22 +1,22 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 
 import League from './components/League';
 import Loading from './components/Loading';
-import { rearrangeMatches } from './utilities/utilities';
+import { rearrangeMatches, getGameDay } from './utilities/utilities';
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: true,
-      leaguesObject: [],
-      error: null,
-      counter: 0
+      leagues: [],
+      error: null
     };
   }
 
   componentDidMount() {
-    this.TimerID = setInterval(() => this.refresh(), 15000);
+    this.TimerID = setInterval(() => this.refresh(), 10000);
   }
 
   componentWillUnmount() {
@@ -36,13 +36,11 @@ export default class App extends Component {
       .then((response) => {
         console.log('Success....');
         const res = rearrangeMatches(response.matches);
-        this.setState({ ...res });
-        const { counter } = this.state;
+        const { filters: { dateFrom } } = response;
         const leaguesRow = res.leagues.map((league) => (
           // console.log(league);
           <League
             key={league.competitionId}
-            counter={counter}
             league={league}
             competitionId={league.competitionId}
             competitionName={league.competitionName}
@@ -50,7 +48,7 @@ export default class App extends Component {
             matchday={league.matchday}
           />
         ));
-        this.setState({ leaguesObject: leaguesRow, isLoading: false, counter: counter + 1 });
+        this.setState({ leagues: leaguesRow, isLoading: false });
       })
       .catch((err) => {
         this.setState({ error: err, isLoading: false });
@@ -58,12 +56,15 @@ export default class App extends Component {
   }
 
   render() {
-    const { leaguesObject, isLoading, error } = this.state;
+    const {
+      leagues, isLoading, error
+    } = this.state;
 
     return (
       <>
         {error ? <p className="error">{error.message}</p> : null}
-        <div>{!isLoading ? leaguesObject : <Loading />}</div>
+        <div className="app-header">{getGameDay(new Date())}</div>
+        <div className="container">{!isLoading ? leagues : <Loading />}</div>
       </>
     );
   }

@@ -17,14 +17,22 @@ body {
   background-attachment: fixed;
 }
 
-.inline-b {
-  display: inline-block;
+.container {
+  padding: 20px;
+  padding-top: 50px;
 }
 
-.league {
-  text-align: center;
-  margin-bottom: 50px;
-  /* background-image: url('../images/sample2.png'); */
+.app-header {
+  background: #04C744;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  padding: 15px;
+  font-size: 1.2rem;
+}
+
+.inline-b {
+  display: inline-block;
 }
 
 .loading {

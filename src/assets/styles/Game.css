@@ -7,7 +7,7 @@
   width: 200px;
   margin: 0 auto;
   position: relative;
-  z-index: 100;
+  z-index: 10;
   text-align: center;
   margin-bottom: -5px;
   border-radius: 25px;
