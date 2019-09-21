@@ -1,0 +1,30 @@
+.league {
+  position: relative;
+  text-align: center;
+  margin: 20px auto;
+  padding-bottom: 15px;
+  background: rgba(232, 232, 232, 0.5);
+  max-width: 800px;
+  border-radius: 25px;
+  /* background-image: url('../images/sample2.png'); */
+}
+
+.league-header {
+  position: relative;
+  background: #04C744;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px;
+  border-radius: 25px 25px 0 0;
+}
+
+.league-name {
+  font-size: 1.3rem;
+  display: inline-block;
+}
+
+.match-day {
+  font-size: 1rem;
+  display: inline-block;
+}
