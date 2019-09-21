@@ -15,9 +15,9 @@ export default class League extends Component {
   }
 
   static getDerivedStateFromProps(props) {
-    return ({
+    return {
       league: props.league
-    });
+    };
   }
 
   render() {
@@ -26,7 +26,9 @@ export default class League extends Component {
         matches, competitionId, competitionName, matchday
       }
     } = this.state;
-    const games = matches.map((match) => <Game key={match.id} matchDetails={match} />);
+    const games = matches.map((match) => (
+      <Game key={match.id} matchDetails={match} />
+    ));
     const matchDay = `Match day: ${matchday}`;
     return (
       <div className="league" id={competitionId}>

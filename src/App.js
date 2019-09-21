@@ -36,7 +36,9 @@ export default class App extends Component {
       .then((response) => {
         console.log('Success....');
         const res = rearrangeMatches(response.matches);
-        const { filters: { dateFrom } } = response;
+        const {
+          filters: { dateFrom }
+        } = response;
         const leaguesRow = res.leagues.map((league) => (
           // console.log(league);
           <League
@@ -56,14 +58,15 @@ export default class App extends Component {
   }
 
   render() {
-    const {
-      leagues, isLoading, error
-    } = this.state;
+    const { leagues, isLoading, error } = this.state;
 
     return (
       <>
+        <div className="app-header">
+          <span className="app-name">Football Scores</span>
+          <span className="date">{getGameDay(new Date())}</span>
+        </div>
         {error ? <p className="error">{error.message}</p> : null}
-        <div className="app-header">{getGameDay(new Date())}</div>
         <div className="container">{!isLoading ? leagues : <Loading />}</div>
       </>
     );

@@ -27,4 +27,5 @@
 .match-day {
   font-size: 1rem;
   display: inline-block;
+  margin-top: 5px;
 }

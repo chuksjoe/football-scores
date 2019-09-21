@@ -19,16 +19,21 @@ body {
 
 .container {
   padding: 20px;
-  padding-top: 50px;
+  padding-top: 60px;
 }
 
 .app-header {
-  background: #04C744;
+  background: #04c744;
+  box-shadow: 0 2px 4px #c4c4c4;
   width: 100%;
   position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
   z-index: 100;
   padding: 15px;
   font-size: 1.2rem;
+  color: #fff;
 }
 
 .inline-b {
@@ -45,7 +50,7 @@ body {
 
 .error {
   text-align: center;
-  padding: 40px 0;
+  padding: 50px 0;
   color: #ad3333;
   font-size: 1.2rem;
 }
