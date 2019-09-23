@@ -19,7 +19,7 @@ body {
 
 .container {
   padding: 20px;
-  padding-top: 60px;
+  padding-top: 120px;
 }
 
 .app-header {
@@ -50,7 +50,7 @@ body {
 
 .error {
   position: fixed;
-  top: 50px;
+  top: 90px;
   width: 100%;
   z-index: 99;
   text-align: center;
@@ -58,4 +58,33 @@ body {
   background: #ad3333;
   color: #fff;
   font-size: 1.2rem;
+}
+
+.error img {
+  float: right;
+}
+
+.date-nav-bar {
+  width: 100%;
+  position: fixed;
+  top: 50px;
+  z-index: 90;
+  display: flex;
+  justify-content: space-evenly;
+  background: #04c744;
+}
+
+.games-day {
+  width: 20%;
+  border: 1px solid #c4c4c4;
+  color: #fff;
+  text-align: center;
+  background: none;
+  padding: 10px 0;
+  cursor: pointer;
+  outline:none ;
+}
+
+.current-day {
+  border-bottom: 5px solid #969121;
 }

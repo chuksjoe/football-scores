@@ -1,7 +1,7 @@
 .league {
   position: relative;
   text-align: center;
-  margin: 20px auto;
+  margin: 20px auto 40px;
   padding-bottom: 15px;
   background: rgba(232, 232, 232, 0.5);
   max-width: 800px;
@@ -10,7 +10,7 @@
 
 .league-header {
   position: relative;
-  background: #04C744;
+  background: #04c744;
   display: flex;
   justify-content: space-between;
   width: 100%;

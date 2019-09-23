@@ -60,3 +60,19 @@ export const getGameTime = (dateString) => {
     minute: '2-digit'
   });
 };
+
+export const getDay = (days) => {
+  const day = new Date(new Date().getTime() + days);
+  return `${appendLeadZero(day.getDate())} / ${day.getMonth() + 1}`;
+};
+
+export const getDate = (days) => {
+  const day = new Date(new Date().getTime() + days);
+  return `${day.getFullYear()}-${appendLeadZero(day.getMonth() + 1)}-${appendLeadZero(day.getDate())}`;
+};
+
+export const isToday = (date) => {
+  const theDate = new Date(date);
+  const today = new Date();
+  return today.setHours(0, 0, 0, 0) === theDate.setHours(0, 0, 0, 0);
+};
