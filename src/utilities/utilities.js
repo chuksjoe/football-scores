@@ -3,6 +3,7 @@ const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
 export const rearrangeMatches = (matches) => {
   const newMatches = [];
 
+  // enter the various leagues/competitions into the new array
   for (let i = 0; i < matches.length; i++) {
     if (
       newMatches.filter((le) => le.competitionId === matches[i].competition.id)
@@ -15,6 +16,7 @@ export const rearrangeMatches = (matches) => {
       });
     }
   }
+  // enter the matches into their respective leagues
   for (let i = 0; i < newMatches.length; i++) {
     const matchGroup = matches.filter(
       (match) => newMatches[i].competitionId === match.competition.id
@@ -26,9 +28,17 @@ export const rearrangeMatches = (matches) => {
 
 export const formatScore = (score) => {
   let { fullTime: { homeTeam, awayTeam } } = score;
-  homeTeam = homeTeam === null ? '' : homeTeam;
-  awayTeam = awayTeam === null ? '' : awayTeam;
-  return `${homeTeam} - ${awayTeam}`;
+  return homeTeam === null ? '_' : `${homeTeam} - ${awayTeam}`;
+};
+
+export const formatStatus = (status) => {
+  switch (status) {
+  case 'SCHEDULED': return '';
+  case 'IN_PLAY': return ' In Play';
+  case 'FINISHED': return ' Finished';
+  case 'PAUSED': return ' Half-time';
+  default: return 'Invalid';
+  }
 };
 
 export const getGameDay = (dateString) => {

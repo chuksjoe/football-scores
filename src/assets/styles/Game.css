@@ -2,6 +2,7 @@
   max-width: 600px;
   margin: 20px auto;
   padding: 0 10px;
+  overflow: hidden
 }
 
 .game-time {
@@ -20,6 +21,8 @@
 }
 
 .teams-score {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   padding: 0 10px;
   background: #27ae60;
@@ -51,8 +54,24 @@
   border-radius: 5px;
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
   .score {
-    max-width: 50px;
+    width: 50px;
+    position: absolute;
+    right: 0;
+    height: 73px;
+    border-radius: 0;
+    padding-top: 5px;
+  }
+  .home-team,
+  .away-team {
+    float: left;
+    text-align: left;
+    padding-left: 10px;
+    display: block;
+    width: 100%;
+  }
+  .away-team {
+    border-top: 2px solid #aaaaaa;
   }
 }

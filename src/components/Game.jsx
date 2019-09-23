@@ -3,7 +3,7 @@ import React from 'react';
 
 import '../assets/styles/Game.css';
 
-import { getGameTime, formatScore } from '../utilities/utilities';
+import { getGameTime, formatScore, formatStatus } from '../utilities/utilities';
 
 const Game = (props) => {
   const {
@@ -11,7 +11,7 @@ const Game = (props) => {
       utcDate, homeTeam, awayTeam, score, status
     }
   } = props;
-  const gameState = `${getGameTime(utcDate)} ${status}`;
+  const gameState = `${getGameTime(utcDate)}${formatStatus(status)}`;
   return (
     <div className="game">
       <div className="game-time">{gameState}</div>

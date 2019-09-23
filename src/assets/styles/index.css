@@ -49,8 +49,13 @@ body {
 }
 
 .error {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  z-index: 99;
   text-align: center;
-  padding: 50px 0;
-  color: #ad3333;
+  padding: 10px;
+  background: #ad3333;
+  color: #fff;
   font-size: 1.2rem;
 }

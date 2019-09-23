@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.TimerID = setInterval(() => this.refresh(), 10000);
+    this.TimerID = setInterval(() => this.refresh(), 30000);
   }
 
   componentWillUnmount() {
@@ -36,21 +36,8 @@ export default class App extends Component {
       .then((response) => {
         console.log('Success....');
         const res = rearrangeMatches(response.matches);
-        const {
-          filters: { dateFrom }
-        } = response;
-        const leaguesRow = res.leagues.map((league) => (
-          // console.log(league);
-          <League
-            key={league.competitionId}
-            league={league}
-            competitionId={league.competitionId}
-            competitionName={league.competitionName}
-            matches={league.matches}
-            matchday={league.matchday}
-          />
-        ));
-        this.setState({ leagues: leaguesRow, isLoading: false });
+
+        this.setState({ leagues: res.leagues, error: null, isLoading: false });
       })
       .catch((err) => {
         this.setState({ error: err, isLoading: false });
@@ -59,6 +46,17 @@ export default class App extends Component {
 
   render() {
     const { leagues, isLoading, error } = this.state;
+    const leaguesComponent = leagues.map((league) => (
+      // console.log(league);
+      <League
+        key={league.competitionId}
+        league={league}
+        competitionId={league.competitionId}
+        competitionName={league.competitionName}
+        matches={league.matches}
+        matchday={league.matchday}
+      />
+    ));
 
     return (
       <>
@@ -66,8 +64,10 @@ export default class App extends Component {
           <span className="app-name">Football Scores</span>
           <span className="date">{getGameDay(new Date())}</span>
         </div>
-        {error ? <p className="error">{error.message}</p> : null}
-        <div className="container">{!isLoading ? leagues : <Loading />}</div>
+        {error ? <div className="error">{error.message}</div> : null}
+        <div className="container">
+          {!isLoading ? leaguesComponent : <Loading />}
+        </div>
       </>
     );
   }
