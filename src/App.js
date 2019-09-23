@@ -64,7 +64,7 @@ export default class App extends Component {
           <span className="app-name">Football Scores</span>
           <span className="date">{getGameDay(new Date())}</span>
         </div>
-        {error ? <div className="error">{error.message}</div> : null}
+        {error ? <div className="error">Network Error!</div> : null}
         <div className="container">
           {!isLoading ? leaguesComponent : <Loading />}
         </div>

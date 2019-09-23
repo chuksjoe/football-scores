@@ -2,7 +2,7 @@
   max-width: 600px;
   margin: 20px auto;
   padding: 0 10px;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .game-time {
@@ -56,7 +56,7 @@
 
 @media only screen and (max-width: 600px) {
   .score {
-    width: 50px;
+    width: 45px;
     position: absolute;
     right: 0;
     height: 73px;
