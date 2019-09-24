@@ -15,11 +15,12 @@ body {
     #c4c4c4;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-width: 350px;
 }
 
 .container {
   padding: 20px;
-  padding-top: 60px;
+  padding-top: 105px;
 }
 
 .app-header {
@@ -50,12 +51,43 @@ body {
 
 .error {
   position: fixed;
-  top: 50px;
+  top: 90px;
   width: 100%;
-  z-index: 99;
+  z-index: 90;
   text-align: center;
-  padding: 10px;
+  padding: 5px 10px;
   background: #ad3333;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+
+.error img {
+  float: right;
+  margin-top: -5px;
+}
+
+.date-nav-bar {
+  width: 100%;
+  position: fixed;
+  top: 50px;
+  z-index: 95;
+  display: flex;
+  justify-content: space-evenly;
+  background: #04c744;
+}
+
+.date-nav-bar-btn {
+  width: 20%;
+  border: 1px solid #c4c4c4;
+  color: #fff;
+  text-align: center;
+  background: none;
+  padding: 10px 0;
+  cursor: pointer;
+  outline:none ;
+}
+
+.current-day-btn {
+  border-bottom: 5px solid #969121;
+  box-shadow: inset 0px -15px 8px rgba(0, 0, 0, 0.25);
 }

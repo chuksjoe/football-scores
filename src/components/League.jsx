@@ -14,9 +14,13 @@ export default class League extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(state, props) {
     return {
-      league: props.league
+      ...state,
+      league: {
+        ...state.league,
+        matches: props.league.matches
+      }
     };
   }
 

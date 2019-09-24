@@ -1,9 +1,16 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 
 import League from './components/League';
 import Loading from './components/Loading';
-import { rearrangeMatches, getGameDay } from './utilities/utilities';
+import DateNavBarBtn from './components/DateNavBarBtn';
+import {
+  rearrangeMatches,
+  getGameDay,
+  getDay,
+  getDate,
+  isToday
+} from './utilities/utilities';
+import reloader from './assets/images/reloader-24.gif';
 
 export default class App extends Component {
   constructor() {
@@ -11,11 +18,14 @@ export default class App extends Component {
     this.state = {
       isLoading: true,
       leagues: [],
-      error: null
+      error: null,
+      navBtnId: 0, // possible values (-2, -1, 0 = today, 1, 2)
+      fetchUrl: 'https://api.football-data.org/v2/matches'
     };
   }
 
   componentDidMount() {
+    this.refresh();
     this.TimerID = setInterval(() => this.refresh(), 30000);
   }
 
@@ -23,31 +33,53 @@ export default class App extends Component {
     clearInterval(this.TimerID);
   }
 
-  refresh() {
-    this.fetchLeagueMatches();
-  }
+  refresh = () => {
+    const { fetchUrl } = this.state;
+    this.fetchLeagueMatches(fetchUrl);
+  };
 
-  fetchLeagueMatches() {
+  fetchLeagueMatches = (url) => {
     const options = {
-      headers: { 'X-Auth-Token': '8648b9b0279f4b65bae72fc3bfc4d07d' }
+      headers: { 'X-Auth-Token': process.env.API_TOKEN }
     };
-    fetch('https://api.football-data.org/v2/matches', options)
+    fetch(url, options)
       .then((res) => res.json())
       .then((response) => {
-        console.log('Success....');
+        console.log('fetch data Successfully....');
         const res = rearrangeMatches(response.matches);
 
-        this.setState({ leagues: res.leagues, error: null, isLoading: false });
+        this.setState((prev) => ({
+          leagues: res.leagues.sort((a, b) => a.competitionId - b.competitionId),
+          error: null,
+          isLoading: false
+        }));
       })
       .catch((err) => {
         this.setState({ error: err, isLoading: false });
       });
-  }
+  };
+
+  setNewDate = (dayCount) => {
+    const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
+    const date = getDate(A_DAY * dayCount);
+    const url = `https://api.football-data.org/v2/matches?dateFrom=${date}&dateTo=${date}`;
+    this.fetchLeagueMatches(url);
+    this.setState({
+      fetchUrl: url, isLoading: true, navBtnId: dayCount, error: null
+    });
+
+    if (!isToday(date)) {
+      clearInterval(this.TimerID);
+    } else {
+      this.TimerID = setInterval(() => this.refresh(), 10000);
+    }
+  };
 
   render() {
-    const { leagues, isLoading, error } = this.state;
+    const {
+      leagues, isLoading, error, navBtnId
+    } = this.state;
     const leaguesComponent = leagues.map((league) => (
-      // console.log(league);
       <League
         key={league.competitionId}
         league={league}
@@ -58,13 +90,33 @@ export default class App extends Component {
       />
     ));
 
+    let navBarBtns = [];
+    for (let i = 0; i < 5; i++) {
+      const dayId = i - 2;
+      let classes = 'date-nav-bar-btn';
+      classes += navBtnId === dayId ? ' current-day-btn' : '';
+      navBarBtns.push(
+        <DateNavBarBtn
+          styleClasses={classes}
+          btnClick={() => this.setNewDate(dayId)}
+          date={dayId === 0 ? 'Today' : getDay(dayId)}
+          key={i}
+        />
+      );
+    }
     return (
       <>
         <div className="app-header">
           <span className="app-name">Football Scores</span>
           <span className="date">{getGameDay(new Date())}</span>
         </div>
-        {error ? <div className="error">Network Error!</div> : null}
+        <div className="date-nav-bar">{navBarBtns}</div>
+        {error ? (
+          <div className="error">
+            Error! Check your internet connection.
+            {navBtnId === 0 ? <img src={reloader} alt="Reloading App..." /> : ''}
+          </div>
+        ) : null}
         <div className="container">
           {!isLoading ? leaguesComponent : <Loading />}
         </div>
