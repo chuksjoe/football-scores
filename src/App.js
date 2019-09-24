@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import League from './components/League';
 import Loading from './components/Loading';
+import DateNavBarBtn from './components/DateNavBarBtn';
 import {
   rearrangeMatches,
   getGameDay,
@@ -18,13 +19,14 @@ export default class App extends Component {
       isLoading: true,
       leagues: [],
       error: null,
+      navBtnId: 0, // possible values (-2, -1, 0 = today, 1, 2)
       fetchUrl: 'https://api.football-data.org/v2/matches'
     };
   }
 
   componentDidMount() {
     this.refresh();
-    this.TimerID = setInterval(() => this.refresh(), 10000);
+    this.TimerID = setInterval(() => this.refresh(), 30000);
   }
 
   componentWillUnmount() {
@@ -38,16 +40,16 @@ export default class App extends Component {
 
   fetchLeagueMatches = (url) => {
     const options = {
-      headers: { 'X-Auth-Token': '8648b9b0279f4b65bae72fc3bfc4d07d' }
+      headers: { 'X-Auth-Token': process.env.API_TOKEN }
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((response) => {
-        console.log('Success....');
+        console.log('fetch data Successfully....');
         const res = rearrangeMatches(response.matches);
 
         this.setState((prev) => ({
-          leagues: res.leagues,
+          leagues: res.leagues.sort((a, b) => a.competitionId - b.competitionId),
           error: null,
           isLoading: false
         }));
@@ -57,11 +59,14 @@ export default class App extends Component {
       });
   };
 
-  setNewDate = (day) => {
-    const date = getDate(day);
+  setNewDate = (dayCount) => {
+    const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
+    const date = getDate(A_DAY * dayCount);
     const url = `https://api.football-data.org/v2/matches?dateFrom=${date}&dateTo=${date}`;
     this.fetchLeagueMatches(url);
-    this.setState({ fetchUrl: url, isLoading: true });
+    this.setState({
+      fetchUrl: url, isLoading: true, navBtnId: dayCount, error: null
+    });
 
     if (!isToday(date)) {
       clearInterval(this.TimerID);
@@ -71,10 +76,10 @@ export default class App extends Component {
   };
 
   render() {
-    const { leagues, isLoading, error } = this.state;
-    const A_DAY = 1000 * 60 * 60 * 24;
+    const {
+      leagues, isLoading, error, navBtnId
+    } = this.state;
     const leaguesComponent = leagues.map((league) => (
-      // console.log(league);
       <League
         key={league.competitionId}
         league={league}
@@ -85,63 +90,31 @@ export default class App extends Component {
       />
     ));
 
+    let navBarBtns = [];
+    for (let i = 0; i < 5; i++) {
+      const dayId = i - 2;
+      let classes = 'date-nav-bar-btn';
+      classes += navBtnId === dayId ? ' current-day-btn' : '';
+      navBarBtns.push(
+        <DateNavBarBtn
+          styleClasses={classes}
+          btnClick={() => this.setNewDate(dayId)}
+          date={dayId === 0 ? 'Today' : getDay(dayId)}
+          key={i}
+        />
+      );
+    }
     return (
       <>
         <div className="app-header">
           <span className="app-name">Football Scores</span>
           <span className="date">{getGameDay(new Date())}</span>
         </div>
-        <div className="date-nav-bar">
-          <button
-            type="button"
-            className="games-day"
-            onClick={() => {
-              this.setNewDate(-(A_DAY * 2));
-            }}
-          >
-            {getDay(-(A_DAY * 2))}
-          </button>
-          <button
-            type="button"
-            className="games-day"
-            onClick={() => {
-              this.setNewDate(-A_DAY);
-            }}
-          >
-            {getDay(-A_DAY)}
-          </button>
-          <button
-            type="button"
-            className="games-day current-day"
-            onClick={() => {
-              this.setNewDate(0);
-            }}
-          >
-            Today
-          </button>
-          <button
-            type="button"
-            className="games-day"
-            onClick={() => {
-              this.setNewDate(A_DAY);
-            }}
-          >
-            {getDay(A_DAY)}
-          </button>
-          <button
-            type="button"
-            className="games-day"
-            onClick={() => {
-              this.setNewDate(A_DAY * 2);
-            }}
-          >
-            {getDay(A_DAY * 2)}
-          </button>
-        </div>
+        <div className="date-nav-bar">{navBarBtns}</div>
         {error ? (
           <div className="error">
             Error! Check your internet connection.
-            <img src={reloader} alt="" />
+            {navBtnId === 0 ? <img src={reloader} alt="Reloading App..." /> : ''}
           </div>
         ) : null}
         <div className="container">

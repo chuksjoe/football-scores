@@ -41,6 +41,11 @@ export const formatStatus = (status) => {
   }
 };
 
+/**
+ * recieve a date-time string and return date
+ * @param {String} dateString
+ * @returns {String} Format: Tues, 24 Sept 2019
+ */
 export const getGameDay = (dateString) => {
   const date = new Date(dateString);
   const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -53,6 +58,11 @@ export const getGameDay = (dateString) => {
     ${appendLeadZero(date.getDate())} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
+/**
+ * recieve a date-time string and return time
+ * @param {String} dateString
+ * @returns {String} Format: 12:33PM
+ */
 export const getGameTime = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleString([], {
@@ -61,16 +71,33 @@ export const getGameTime = (dateString) => {
   });
 };
 
-export const getDay = (days) => {
-  const day = new Date(new Date().getTime() + days);
-  return `${appendLeadZero(day.getDate())} / ${day.getMonth() + 1}`;
+/**
+ * recieve day count from today and return the date of that day
+ * @param {Integer} dayCount
+ * @returns {String} Format: 23/09
+ */
+export const getDay = (dayCount) => {
+  const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
+  const day = new Date(new Date().getTime() + A_DAY * dayCount);
+  return `${appendLeadZero(day.getDate())} /
+    ${appendLeadZero(day.getMonth() + 1)}`;
 };
 
-export const getDate = (days) => {
-  const day = new Date(new Date().getTime() + days);
+/**
+ * recieve day count from today in milliseconds and return the date of that day
+ * @param {Integer} millis
+ * @returns {String} Format: 2019-07-21
+ */
+export const getDate = (millis) => {
+  const day = new Date(new Date().getTime() + millis);
   return `${day.getFullYear()}-${appendLeadZero(day.getMonth() + 1)}-${appendLeadZero(day.getDate())}`;
 };
 
+/**
+ * recieve a date value and return true if the date is today. Otherwise, false.
+ * @param {String} date
+ * @returns {Boolean}
+ */
 export const isToday = (date) => {
   const theDate = new Date(date);
   const today = new Date();
