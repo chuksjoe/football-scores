@@ -40,7 +40,7 @@ export default class App extends Component {
 
   fetchLeagueMatches = (url) => {
     const options = {
-      headers: { 'X-Auth-Token': process.env.API_TOKEN }
+      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN }
     };
     fetch(url, options)
       .then((res) => res.json())
