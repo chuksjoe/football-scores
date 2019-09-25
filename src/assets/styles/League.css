@@ -6,11 +6,13 @@
   background: rgba(232, 232, 232, 0.5);
   max-width: 800px;
   border-radius: 25px;
+  box-shadow: 0 0 4px #777;
 }
 
 .league-header {
   position: relative;
-  background: #04c744;
+  background: #3AC16A;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   width: 100%;

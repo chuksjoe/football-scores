@@ -6,13 +6,7 @@ body {
   margin: 0;
   font-family: 'Oxygen', sans-serif;
   font-size: 0.9rem;
-  background: linear-gradient(
-      180deg,
-      #ffffff 0%,
-      rgba(198, 225, 162, 0.826456) 37.5%,
-      rgba(145, 250, 11, 0) 100%
-    ),
-    #c4c4c4;
+  background: #fff;
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-width: 350px;
@@ -24,7 +18,7 @@ body {
 }
 
 .app-header {
-  background: #04c744;
+  background: #3AC16A;
   box-shadow: 0 2px 4px #c4c4c4;
   width: 100%;
   position: fixed;
@@ -73,18 +67,19 @@ body {
   z-index: 95;
   display: flex;
   justify-content: space-evenly;
-  background: #04c744;
+  background: #3AC16A;
 }
 
 .date-nav-bar-btn {
   width: 20%;
-  border: 1px solid #c4c4c4;
   color: #fff;
+  border: none;
   text-align: center;
   background: none;
   padding: 10px 0;
   cursor: pointer;
   outline:none ;
+  box-shadow: 0 1px 3px #c4c4c4;
 }
 
 .current-day-btn {

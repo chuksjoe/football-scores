@@ -1,15 +1,30 @@
+const genRandomString = () => {
+  const charSet = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()';
+  const captchaLen = 4;
+  const captcha = [];
+  for (let i = 0; i < captchaLen; i += 1) {
+    const index = Math.floor(Math.random() * charSet.length + 1);
+    if (captcha.indexOf(charSet[index]) === -1) {
+      captcha.push(charSet[index]);
+    } else {
+      i -= 1;
+    }
+  }
+  return captcha.join('');
+};
+
 const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
 
 export const rearrangeMatches = (matches) => {
-  const newMatches = [];
+  const leagues = [];
 
   // enter the various leagues/competitions into the new array
   for (let i = 0; i < matches.length; i++) {
     if (
-      newMatches.filter((le) => le.competitionId === matches[i].competition.id)
+      leagues.filter((le) => le.competitionId === matches[i].competition.id)
         .length < 1
     ) {
-      newMatches.push({
+      leagues.push({
         competitionId: matches[i].competition.id,
         competitionName: matches[i].competition.name,
         matchday: matches[i].matchday
@@ -17,13 +32,14 @@ export const rearrangeMatches = (matches) => {
     }
   }
   // enter the matches into their respective leagues
-  for (let i = 0; i < newMatches.length; i++) {
+  for (let i = 0; i < leagues.length; i++) {
     const matchGroup = matches.filter(
-      (match) => newMatches[i].competitionId === match.competition.id
+      (match) => leagues[i].competitionId === match.competition.id
     );
-    newMatches[i].matches = matchGroup;
+    leagues[i].matches = matchGroup;
+    leagues[i].rand = genRandomString();
   }
-  return { count: newMatches.length, leagues: newMatches };
+  return { count: leagues.length, leagues };
 };
 
 export const formatScore = (score) => {

@@ -40,7 +40,7 @@ export default class App extends Component {
 
   fetchLeagueMatches = (url) => {
     const options = {
-      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN },
+      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN }
     };
     fetch(url, options)
       .then((res) => res.json())
@@ -49,7 +49,7 @@ export default class App extends Component {
         const res = rearrangeMatches(response.matches);
 
         this.setState((prev) => ({
-          leagues: res.leagues.sort((a, b) => a.competitionId - b.competitionId),
+          leagues: res.leagues,
           error: null,
           isLoading: false
         }));
@@ -79,16 +79,19 @@ export default class App extends Component {
     const {
       leagues, isLoading, error, navBtnId
     } = this.state;
-    const leaguesComponent = leagues.map((league) => (
-      <League
-        key={league.competitionId}
-        league={league}
-        competitionId={league.competitionId}
-        competitionName={league.competitionName}
-        matches={league.matches}
-        matchday={league.matchday}
-      />
-    ));
+    const leaguesComponent = leagues
+      .sort((a, b) => a.competitionId - b.competitionId)
+      .map((league) => (
+        <League
+          key={league.competitionId}
+          league={league}
+          competitionId={league.competitionId}
+          competitionName={league.competitionName}
+          matches={league.matches}
+          matchday={league.matchday}
+          rand={league.rand}
+        />
+      ));
 
     let navBarBtns = [];
     for (let i = 0; i < 5; i++) {

@@ -50,7 +50,7 @@
   background: #219653;
   color: #fff;
   font-size: 1.1rem;
-  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 5px 8px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 }
 
@@ -63,6 +63,7 @@
     border-radius: 0;
     padding-top: 5px;
   }
+
   .home-team,
   .away-team {
     float: left;
@@ -71,6 +72,7 @@
     display: block;
     width: 100%;
   }
+
   .away-team {
     border-top: 2px solid #aaaaaa;
   }
