@@ -40,7 +40,7 @@ export default class App extends Component {
 
   fetchLeagueMatches = (url) => {
     const options = {
-      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN },
+      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN }
     };
     fetch(url, options)
       .then((res) => res.json())
@@ -87,6 +87,7 @@ export default class App extends Component {
         competitionName={league.competitionName}
         matches={league.matches}
         matchday={league.matchday}
+        rand={league.rand}
       />
     ));
 

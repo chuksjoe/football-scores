@@ -27,7 +27,7 @@ export default class League extends Component {
   render() {
     const {
       league: {
-        matches, competitionId, competitionName, matchday
+        matches, competitionId, competitionName, matchday, rand
       }
     } = this.state;
     const games = matches.map((match) => (
@@ -35,7 +35,7 @@ export default class League extends Component {
     ));
     const matchDay = `Match day: ${matchday}`;
     return (
-      <div className="league" id={competitionId}>
+      <div className="league" id={competitionId} data-rand={rand}>
         <div className="league-header">
           <span className="league-name">{competitionName}</span>
           <span className="match-day">{matchDay}</span>
