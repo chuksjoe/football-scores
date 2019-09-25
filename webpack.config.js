@@ -46,7 +46,8 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      safe: true
+      safe: true,
+      systemvars: true
     }),
     new HtmlWebpackPlugin({
       template: path.resolve('public/index.html')
