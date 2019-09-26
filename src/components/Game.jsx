@@ -11,10 +11,11 @@ const Game = (props) => {
       utcDate, homeTeam, awayTeam, score, status
     }
   } = props;
-  const gameState = `${getGameTime(utcDate)}${formatStatus(status)}`;
   return (
     <div className="game">
-      <div className="game-time">{gameState}</div>
+      <div className="game-time">
+        {`${getGameTime(utcDate)} ${formatStatus(status)}`}
+      </div>
       <div className="teams-score">
         <div className="home-team inline-b">{homeTeam.name}</div>
         <div className="score inline-b">{formatScore(score)}</div>
