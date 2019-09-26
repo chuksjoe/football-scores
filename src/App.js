@@ -48,11 +48,11 @@ export default class App extends Component {
         console.log('fetch data Successfully....');
         const res = rearrangeMatches(response.matches);
 
-        this.setState((prev) => ({
+        this.setState({
           leagues: res.leagues,
           error: null,
           isLoading: false
-        }));
+        });
       })
       .catch((err) => {
         this.setState({ error: err, isLoading: false });
