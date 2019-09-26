@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFutbol } from '@fortawesome/free-solid-svg-icons';
 
 import League from './components/League';
 import Loading from './components/Loading';
 import DateNavBarBtn from './components/DateNavBarBtn';
+import TickClock from './components/TickClock';
 import {
   rearrangeMatches,
-  getGameDay,
+  // getGameDay,
   getDay,
   getDate,
   isToday
 } from './utilities/utilities';
 import reloader from './assets/images/reloader-24.gif';
+import Footer from './components/Footer';
 
 export default class App extends Component {
   constructor() {
@@ -110,8 +114,13 @@ export default class App extends Component {
     return (
       <>
         <div className="app-header">
-          <span className="app-name">Football Scores</span>
-          <span className="date">{getGameDay(new Date())}</span>
+          <span className="app-name">
+            F
+            <FontAwesomeIcon icon={faFutbol} />
+            <FontAwesomeIcon icon={faFutbol} />
+            tball Score
+          </span>
+          <TickClock />
         </div>
         <div className="date-nav-bar">{navBarBtns}</div>
         {error ? (
@@ -123,6 +132,7 @@ export default class App extends Component {
         <div className="container">
           {!isLoading ? leaguesComponent : <Loading />}
         </div>
+        <Footer />
       </>
     );
   }

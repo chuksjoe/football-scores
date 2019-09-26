@@ -15,6 +15,13 @@ const genRandomString = () => {
 
 const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
 
+const DAYS = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'April',
+  'May', 'June', 'July', 'Aug',
+  'Sept', 'Oct', 'Nov', 'Dec'
+];
+
 export const rearrangeMatches = (matches) => {
   const leagues = [];
 
@@ -64,14 +71,15 @@ export const formatStatus = (status) => {
  */
 export const getGameDay = (dateString) => {
   const date = new Date(dateString);
-  const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
-  const months = [
-    'Jan', 'Feb', 'Mar', 'April',
-    'May', 'June', 'July', 'Aug',
-    'Sept', 'Oct', 'Nov', 'Dec'
-  ];
-  return `${days[date.getDay()]},
-    ${appendLeadZero(date.getDate())} ${months[date.getMonth()]} ${date.getFullYear()}`;
+
+  return `${DAYS[date.getDay()]},
+    ${appendLeadZero(date.getDate())} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+};
+
+export const getCurrentDateTime = (dateObj) => {
+  const date = dateObj;
+  return `${DAYS[date.getDay()]}, ${date.getDate()} ${MONTHS[date.getMonth()]}.
+  ${date.toLocaleString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' })}`;
 };
 
 /**
