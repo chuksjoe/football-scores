@@ -8,19 +8,14 @@ export default class League extends Component {
   constructor(props) {
     super(props);
     const { league } = this.props;
-    this.initialState = [];
     this.state = {
       league
     };
   }
 
-  static getDerivedStateFromProps(state, props) {
+  static getDerivedStateFromProps(props) {
     return {
-      ...state,
-      league: {
-        ...state.league,
-        matches: props.league.matches
-      }
+      league: props.league
     };
   }
 
