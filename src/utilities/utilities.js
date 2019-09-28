@@ -1,5 +1,31 @@
-const genRandomString = () => {
-  const charSet = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()';
+const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
+
+const DAYS = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'April',
+  'May', 'June', 'July', 'Aug',
+  'Sept', 'Oct', 'Nov', 'Dec'
+];
+
+const competitionCountry = {
+  2000: 'Global',
+  2001: 'Europe',
+  2002: 'Germany',
+  2003: 'Netherlands',
+  2013: 'Brazil',
+  2014: 'Spain',
+  2015: 'France',
+  2016: 'England',
+  2017: 'Portugal',
+  2018: 'Europe',
+  2019: 'Italy',
+  2021: 'England'
+};
+
+export const genRandomString = () => {
+  const charSet =
+    '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()';
   const captchaLen = 4;
   const captcha = [];
   for (let i = 0; i < captchaLen; i += 1) {
@@ -13,15 +39,6 @@ const genRandomString = () => {
   return captcha.join('');
 };
 
-const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
-
-const DAYS = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
-const MONTHS = [
-  'Jan', 'Feb', 'Mar', 'April',
-  'May', 'June', 'July', 'Aug',
-  'Sept', 'Oct', 'Nov', 'Dec'
-];
-
 export const rearrangeMatches = (matches) => {
   const leagues = [];
 
@@ -31,9 +48,12 @@ export const rearrangeMatches = (matches) => {
       leagues.filter((le) => le.competitionId === matches[i].competition.id)
         .length < 1
     ) {
+      const competitionName = `${
+        competitionCountry[matches[i].competition.id]
+      }: ${matches[i].competition.name}`;
       leagues.push({
         competitionId: matches[i].competition.id,
-        competitionName: matches[i].competition.name,
+        competitionName,
         matchday: matches[i].matchday
       });
     }
@@ -44,7 +64,6 @@ export const rearrangeMatches = (matches) => {
       (match) => leagues[i].competitionId === match.competition.id
     );
     leagues[i].matches = matchGroup;
-    leagues[i].rand = genRandomString();
   }
   return { count: leagues.length, leagues };
 };
@@ -100,7 +119,7 @@ export const getGameTime = (dateString) => {
  * @param {Integer} dayCount
  * @returns {String} Format: 23/09
  */
-export const getDay = (dayCount) => {
+export const getDayFromToday = (dayCount) => {
   const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
   const day = new Date(new Date().getTime() + A_DAY * dayCount);
   return `${appendLeadZero(day.getDate())} /
@@ -112,7 +131,7 @@ export const getDay = (dayCount) => {
  * @param {Integer} millis
  * @returns {String} Format: 2019-07-21
  */
-export const getDate = (millis) => {
+export const getDateFromToday = (millis) => {
   const day = new Date(new Date().getTime() + millis);
   return `${day.getFullYear()}-${appendLeadZero(day.getMonth() + 1)}-${appendLeadZero(day.getDate())}`;
 };

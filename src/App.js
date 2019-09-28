@@ -9,8 +9,8 @@ import TickClock from './components/TickClock';
 import {
   rearrangeMatches,
   // getGameDay,
-  getDay,
-  getDate,
+  getDayFromToday,
+  getDateFromToday,
   isToday
 } from './utilities/utilities';
 import reloader from './assets/images/reloader-24.gif';
@@ -65,7 +65,7 @@ export default class App extends Component {
 
   setNewDate = (dayCount) => {
     const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
-    const date = getDate(A_DAY * dayCount);
+    const date = getDateFromToday(A_DAY * dayCount);
     const url = `https://api.football-data.org/v2/matches?dateFrom=${date}&dateTo=${date}`;
     this.fetchLeagueMatches(url);
     this.setState({
@@ -93,11 +93,11 @@ export default class App extends Component {
           competitionName={league.competitionName}
           matches={league.matches}
           matchday={league.matchday}
-          rand={league.rand}
         />
       ));
 
     let navBarBtns = [];
+
     for (let i = 0; i < 5; i++) {
       const dayId = i - 2;
       let classes = 'date-nav-bar-btn';
@@ -106,7 +106,7 @@ export default class App extends Component {
         <DateNavBarBtn
           styleClasses={classes}
           btnClick={() => this.setNewDate(dayId)}
-          date={dayId === 0 ? 'Today' : getDay(dayId)}
+          date={dayId === 0 ? 'Today' : getDayFromToday(dayId)}
           key={i}
         />
       );
