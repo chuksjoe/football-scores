@@ -1,4 +1,4 @@
-const appendLeadZero = (val) => (Number(val) > 10 ? val : `0${val}`);
+const appendLeadZero = (val) => (Number(val) > 9 ? val : `0${val}`);
 
 const DAYS = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
 
