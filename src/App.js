@@ -8,7 +8,6 @@ import DateNavBarBtn from './components/DateNavBarBtn';
 import TickClock from './components/TickClock';
 import {
   rearrangeMatches,
-  // getGameDay,
   getDayFromToday,
   getDateFromToday,
   isToday
@@ -125,7 +124,7 @@ export default class App extends Component {
         <div className="date-nav-bar">{navBarBtns}</div>
         {error ? (
           <div className="error">
-            Error! Check your internet connection.
+            Error! Please, check your internet connection.
             {navBtnId === 0 ? <img src={reloader} alt="Reloading App..." /> : ''}
           </div>
         ) : null}
