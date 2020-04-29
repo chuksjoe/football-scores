@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
@@ -52,6 +53,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve('public/index.html')
     }),
+    new CopyWebpackPlugin([
+      { from: 'public/images', to: 'images' },
+      { from: 'public/manifest', to: 'manifest' }
+    ]),
     new webpack.HotModuleReplacementPlugin()
   ]
 };
