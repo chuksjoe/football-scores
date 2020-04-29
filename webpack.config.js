@@ -62,7 +62,8 @@ module.exports = {
       skipWaiting: true
     }),
     new CopyWebpackPlugin([
-      { from: 'public/', to: '/' }
+      { from: 'public/images', to: 'images' },
+      { from: 'public/manifest', to: 'manifest' }
     ]),
     new webpack.HotModuleReplacementPlugin()
   ]
