@@ -38,6 +38,7 @@ export default class Game extends Component {
     if (status === 'IN_PLAY') style = { background: '#04E044' };
     else if (status === 'PAUSED') style = { background: '#E78000' };
     else if (status === 'FINISHED') style = { background: '#717371' };
+    else if (status === 'CANCELLED') style = { background: '#C83232' };
     else style = { background: '#969121' };
     return (
       <div className="game">

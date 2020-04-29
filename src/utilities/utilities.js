@@ -74,12 +74,16 @@ export const formatScore = (score) => {
 };
 
 export const formatStatus = (status) => {
+  console.log(status);
   switch (status) {
   case 'SCHEDULED': return '';
   case 'IN_PLAY': return ' In Play';
   case 'FINISHED': return ' Finished';
   case 'PAUSED': return ' Half-time';
   case 'POSTPONED': return ' Postponed';
+  case 'CANCELLED': return ' Cancelled';
+  case 'SUSPENDED': return ' Suspended';
+  case 'AWARDED': return ' Awarded';
   default: return 'Invalid';
   }
 };
