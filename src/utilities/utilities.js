@@ -79,6 +79,7 @@ export const formatStatus = (status) => {
   case 'IN_PLAY': return ' In Play';
   case 'FINISHED': return ' Finished';
   case 'PAUSED': return ' Half-time';
+  case 'POSTPONED': return ' Postponed';
   default: return 'Invalid';
   }
 };

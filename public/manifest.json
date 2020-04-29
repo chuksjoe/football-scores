@@ -1,0 +1,20 @@
+{
+  "short_name": "Football Update",
+  "name": "Live Football Score Update",
+  "icons": [
+    {
+      "src": "images/favicon.gif",
+      "sizes": "64x64",
+      "type": "image/gif"
+    },
+    {
+      "src": "images/football-logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#27ae60",
+  "background_color": "#fff"
+}

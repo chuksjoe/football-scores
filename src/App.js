@@ -130,7 +130,9 @@ export default class App extends Component {
           </div>
         ) : null}
         <div className="container">
-          {!isLoading ? leaguesComponent : <Loading />}
+          {!isLoading ?
+            (leaguesComponent.length && leaguesComponent) || <p className="center-text">No match for today</p> :
+            <Loading />}
         </div>
         <Footer />
       </>

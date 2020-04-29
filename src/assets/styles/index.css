@@ -12,6 +12,10 @@ body {
   min-width: 370px;
 }
 
+.center-text {
+  text-align: center;
+}
+
 .container {
   padding: 20px 20px 0;
   padding-top: 110px;
