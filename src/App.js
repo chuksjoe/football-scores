@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faCalendarAlt, faBackward } from '@fortawesome/free-solid-svg-icons';
 
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import './assets/styles/Calendar.css';
 
 import League from './components/League';
 import Loading from './components/Loading';
