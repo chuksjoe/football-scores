@@ -8,7 +8,8 @@ export default class League extends PureComponent {
   render() {
     const {
       league: {
-        matches, competitionId, competitionName, matchday, rand
+        matches, competitionId, competitionName,
+        competitionCountry, matchday, crest, rand
       }
     } = this.props;
     const games = matches
@@ -27,7 +28,10 @@ export default class League extends PureComponent {
     return (
       <div className="league" id={competitionId} data-rand={rand}>
         <div className="league-header">
-          <span className="league-name">{competitionName}</span>
+          <span className="league-name">
+            {crest ? <img src={crest} alt={competitionCountry} /> : `${competitionCountry}: `}
+            {competitionName}
+          </span>
           <span className="match-day">{matchDay}</span>
         </div>
         {games}
