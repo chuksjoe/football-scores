@@ -9,7 +9,7 @@ body {
   background: #fff;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  min-width: 370px;
+  min-width: 400px;
 }
 
 .center-text {
@@ -25,6 +25,7 @@ body {
   background: #3AC16A;
   box-shadow: 0 2px 4px #c4c4c4;
   width: 100%;
+  min-width: 400px;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -55,8 +56,9 @@ body {
 
 .error {
   position: fixed;
-  top: 95px;
+  top: 90px;
   width: 100%;
+  min-width: 400px;
   z-index: 90;
   text-align: center;
   padding: 5px 10px;
@@ -72,12 +74,24 @@ body {
 
 .date-nav-bar {
   width: 100%;
+  min-width: 400px;
   position: fixed;
   top: 55px;
   z-index: 95;
   display: flex;
   justify-content: space-evenly;
   background: #3AC16A;
+  box-shadow: 0 1px 3px #c4c4c4;
+}
+
+.nav-btns {
+  width: calc(100% - 35px);
+}
+
+.selected-date {
+  width: calc(100% - 70px);
+  color: #fff;
+  padding: 10px;
 }
 
 .date-nav-bar-btn {
@@ -89,12 +103,28 @@ body {
   padding: 10px 0;
   cursor: pointer;
   outline:none ;
-  box-shadow: 0 1px 3px #c4c4c4;
+  border-left: 1px solid #c4c4c4;
 }
 
 .current-day-btn {
-  border-bottom: 5px solid #969121;
+  /* border-bottom: 5px solid #969121; */
   box-shadow: inset 0px -15px 8px rgba(0, 0, 0, 0.25);
+}
+
+.calendar-icon,
+.back-btn {
+  width: 35px;
+  height: auto;
+}
+
+.back-btn {
+  border-right: 1px solid #c4c4c4;
+  border-left: none;
+}
+
+.calendar-icon:hover,
+.back-btn:hover {
+  background-color: #11913e;
 }
 
 /*General footer styling */
@@ -143,7 +173,25 @@ footer p {
   transform: rotate(720deg);
 }
 
-@media only screen and (max-width: 430px) {
+.overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  z-index: 1000;
+  padding: 10px 20px;
+}
+.calendar {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+}
+
+@media only screen and (max-width: 450px) {
   .inner-div {
     display: block;
     text-align: center;

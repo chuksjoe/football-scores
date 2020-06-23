@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFutbol } from '@fortawesome/free-solid-svg-icons';
+import { faFutbol, faCalendarAlt, faBackward } from '@fortawesome/free-solid-svg-icons';
+
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import League from './components/League';
 import Loading from './components/Loading';
@@ -10,10 +13,13 @@ import {
   rearrangeMatches,
   getDayFromToday,
   getDateFromToday,
-  isToday
+  isToday,
+  getGameDay,
+  formatDateForUrl
 } from './utilities/utilities';
 import reloader from './assets/images/reloader-24.gif';
 import Footer from './components/Footer';
+import { fetchMatches } from './api/footballData';
 
 export default class App extends Component {
   constructor() {
@@ -23,52 +29,52 @@ export default class App extends Component {
       leagues: [],
       error: null,
       navBtnId: 0, // possible values (-2, -1, 0 = today, 1, 2)
-      fetchUrl: 'https://api.football-data.org/v2/matches'
+      calendarDate: new Date(),
+      isShowingCalendar: false,
+      usingCalendar: false
     };
+    this.calendarRef = React.createRef();
   }
 
   componentDidMount() {
     this.refresh();
     this.TimerID = setInterval(() => this.refresh(), 30000);
+    document.addEventListener('mousedown', this.clickOutsideCalendar);
   }
 
   componentWillUnmount() {
     clearInterval(this.TimerID);
+    document.removeEventListener('mousedown', this.clickOutsideCalendar);
   }
 
   refresh = () => {
-    const { fetchUrl } = this.state;
-    this.fetchLeagueMatches(fetchUrl);
+    this.fetchLeaguesMatches();
   };
 
-  fetchLeagueMatches = (url) => {
-    const options = {
-      headers: { 'X-Auth-Token': process.env.REACT_APP_API_TOKEN }
-    };
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((response) => {
-        console.log('fetch data Successfully....');
-        const res = rearrangeMatches(response.matches);
+  fetchLeaguesMatches = async (date = null) => {
+    const resp = await fetchMatches(date);
 
-        this.setState({
-          leagues: res.leagues,
-          error: null,
-          isLoading: false
-        });
-      })
-      .catch((err) => {
-        this.setState({ error: err, isLoading: false });
+    if (resp && resp.status === 200) {
+      const { matches } = resp.data;
+      console.log('fetch data Successfully....');
+      const res = rearrangeMatches(matches);
+
+      this.setState({
+        leagues: res.leagues,
+        error: null,
+        isLoading: false
       });
+    } else {
+      this.setState({ error: 'Network Error! Please, be patient. App will reload.', isLoading: false });
+    }
   };
 
   setNewDate = (dayCount) => {
     const A_DAY = 86400000; // 1000mills * 60s * 60m * 24hr;
     const date = getDateFromToday(A_DAY * dayCount);
-    const url = `https://api.football-data.org/v2/matches?dateFrom=${date}&dateTo=${date}`;
-    this.fetchLeagueMatches(url);
+    this.fetchLeaguesMatches(date);
     this.setState({
-      fetchUrl: url, isLoading: true, navBtnId: dayCount, error: null
+      isLoading: true, navBtnId: dayCount
     });
 
     if (!isToday(date)) {
@@ -78,10 +84,57 @@ export default class App extends Component {
     }
   };
 
+  setNewDateFromCalendar = (newDate) => {
+    const date = formatDateForUrl(newDate);
+    this.fetchLeaguesMatches(date);
+    this.setState({
+      isLoading: true
+    });
+
+    if (!isToday(date)) {
+      clearInterval(this.TimerID);
+    } else {
+      this.TimerID = setInterval(() => this.refresh(), 10000);
+    }
+  };
+
+  onChangeCalendar = (date) => {
+    this.setState({
+      calendarDate: date,
+      isShowingCalendar: false,
+      usingCalendar: true
+    });
+    this.setNewDateFromCalendar(date);
+  }
+
+  showCalendar = () => {
+    this.setState({ isShowingCalendar: true });
+  }
+
+  backToMainview = () => {
+    const { navBtnId } = this.state;
+
+    this.setState({
+      usingCalendar: false
+    });
+    this.setNewDate(navBtnId);
+  }
+
+  clickOutsideCalendar = (e) => {
+    const { isShowingCalendar } = this.state;
+    if (!isShowingCalendar) return;
+
+    if (this.calendarRef && !this.calendarRef.current.contains(e.target)) {
+      this.setState({ isShowingCalendar: false, usingCalendar: false });
+    }
+  }
+
   render() {
     const {
-      leagues, isLoading, error, navBtnId
+      leagues, isLoading, error, navBtnId,
+      calendarDate, isShowingCalendar, usingCalendar
     } = this.state;
+
     const leaguesComponent = leagues
       .sort((a, b) => a.competitionId - b.competitionId)
       .map((league) => (
@@ -110,6 +163,7 @@ export default class App extends Component {
         />
       );
     }
+
     return (
       <>
         <div className="app-header">
@@ -121,10 +175,33 @@ export default class App extends Component {
           </span>
           <TickClock />
         </div>
-        <div className="date-nav-bar">{navBarBtns}</div>
+        <div className="date-nav-bar">
+          {usingCalendar ? (
+            <>
+              <button
+                type="button"
+                className="date-nav-bar-btn back-btn"
+                onClick={this.backToMainview}
+              >
+                <FontAwesomeIcon icon={faBackward} />
+              </button>
+              <div className="selected-date">
+                {getGameDay(calendarDate)}
+              </div>
+            </>
+          ) :
+            <div className="nav-btns">{navBarBtns}</div>}
+          <button
+            type="button"
+            className="date-nav-bar-btn calendar-icon"
+            onClick={this.showCalendar}
+          >
+            <FontAwesomeIcon icon={faCalendarAlt} />
+          </button>
+        </div>
         {error ? (
           <div className="error">
-            Error! Please, check your internet connection.
+            {error}
             {navBtnId === 0 ? <img src={reloader} alt="Reloading App..." /> : ''}
           </div>
         ) : null}
@@ -134,6 +211,18 @@ export default class App extends Component {
             <Loading />}
         </div>
         <Footer />
+        {isShowingCalendar &&
+        (
+          <div className="overlay">
+            <div ref={this.calendarRef}>
+              <Calendar
+                onChange={this.onChangeCalendar}
+                value={calendarDate}
+                className="calendar"
+              />
+            </div>
+          </div>
+        )}
       </>
     );
   }

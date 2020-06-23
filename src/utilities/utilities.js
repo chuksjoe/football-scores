@@ -48,13 +48,12 @@ export const rearrangeMatches = (matches) => {
       leagues.filter((le) => le.competitionId === matches[i].competition.id)
         .length < 1
     ) {
-      const competitionName = `${
-        competitionCountry[matches[i].competition.id]
-      }: ${matches[i].competition.name}`;
       leagues.push({
         competitionId: matches[i].competition.id,
-        competitionName,
-        matchday: matches[i].matchday
+        competitionName: matches[i].competition.name,
+        competitionCountry: competitionCountry[matches[i].competition.id],
+        matchday: matches[i].matchday,
+        crest: matches[i].competition.area.ensignUrl
       });
     }
   }
@@ -74,7 +73,6 @@ export const formatScore = (score) => {
 };
 
 export const formatStatus = (status) => {
-  console.log(status);
   switch (status) {
   case 'SCHEDULED': return '';
   case 'IN_PLAY': return ' In Play';
@@ -138,6 +136,17 @@ export const getDayFromToday = (dayCount) => {
  */
 export const getDateFromToday = (millis) => {
   const day = new Date(new Date().getTime() + millis);
+  return `${day.getFullYear()}-${appendLeadZero(day.getMonth() + 1)}-${appendLeadZero(day.getDate())}`;
+};
+
+/**
+ * receive a date object and format it into the format that is used by the football api
+ * @param {Date} dateObject
+ * @returns {String} Format: 2019-07-21
+ */
+export const formatDateForUrl = (dateObject) => {
+  const day = new Date(dateObject);
+
   return `${day.getFullYear()}-${appendLeadZero(day.getMonth() + 1)}-${appendLeadZero(day.getDate())}`;
 };
 
